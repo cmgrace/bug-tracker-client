@@ -1,77 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllUsers, updateUser } from "../../actions/users";
 import {
   CButton,
   CCard,
   CCardBody,
-  CCardFooter,
   CCardHeader,
   CCol,
   CForm,
   CFormGroup,
-  CInputCheckbox,
   CLabel,
   CSelect,
   CRow,
-  CBadge,
   CDataTable,
-  CInput,
-  CInputGroup,
-  CInputGroupAppend,
+  CInputRadio,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import usersData from "../users/UsersData";
 
-// const teamMember = [
-//   {
-//     id: 1,
-//     name: "Grace Cheng",
-//   },
-//   {
-//     id: 2,
-//     name: "Ernest Law",
-//   },
-//   {
-//     id: 3,
-//     name: "Daniel Wu",
-//   },
-//   {
-//     id: 4,
-//     name: "Jacob Lee",
-//   },
-//   {
-//     id: 5,
-//     name: "Joshua Masterson",
-//   },
-//   {
-//     id: 6,
-//     name: "Deviant Man",
-//   },
-//   {
-//     id: 7,
-//     name: "Jorgen malakith",
-//   },
-//   {
-//     id: 8,
-//     name: "Bobby Savis",
-//   },
-// ];
-const getBadge = (status) => {
-  switch (status) {
-    case "Active":
-      return "success";
-    case "Inactive":
-      return "secondary";
-    case "Pending":
-      return "warning";
-    case "Banned":
-      return "danger";
-    default:
-      return "primary";
-  }
-};
-const fields = ["name", "registered", "role", "status"];
+const fields = ["name", "email", "registered", "role"];
 
 function ManageRole() {
+  const dispatch = useDispatch();
+
+  const [id, setId] = useState("-1");
+  const [role, setRole] = useState();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  const members = useSelector((state) => state.users);
+  //const assignMembers = members.filter((member) => member.role.length === 0);
+  console.log("members:", members);
+
+  const findUser = (id) => {
+    const theUser = members.find((member) => member.id === id);
+    return theUser;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userAdd = {
+      //   name: user.name,
+      //   email: user.email,
+      //   registered: user.registered,
+      ...user,
+      role: role,
+    };
+    if (id !== -1) dispatch(updateUser(id, userAdd));
+    else if (id === -1) console.log("Please select a user");
+    setId("-1");
+    setRole();
+    setUser();
+  };
+  const handleReset = () => {
+    setId("-1");
+    setRole();
+  };
+
   return (
     <>
       <CRow>
@@ -86,137 +73,138 @@ function ManageRole() {
               <CForm
                 action=""
                 method="post"
+                onSubmit={handleSubmit}
                 encType="multipart/form-data"
                 className="form-horizontal"
               >
                 <CFormGroup row>
                   <CCol md="3">
-                    <CLabel htmlFor="select">Select</CLabel>
+                    <CLabel htmlFor="select">Select an user</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CSelect custom name="select" id="select">
-                      <option value="0">Please select</option>
-                      <option value="1">Option #1</option>
-                      <option value="2">Option #2</option>
-                      <option value="3">Option #3</option>
+                    <CSelect
+                      custom
+                      name="select"
+                      id="select"
+                      value={id}
+                      onChange={(e) => {
+                        setId(e.target.value);
+                        // console.log(user);
+                        setUser(findUser(id));
+                      }}
+                    >
+                      <option value="-1">Please select</option>
+                      {members.map((member) => (
+                        <option key={member.id} value={member.id}>
+                          {member.name}
+                        </option>
+                      ))}
                     </CSelect>
+                    <p>{id}</p>
+                    <p>{role}</p>
                   </CCol>
                 </CFormGroup>
-
-                <CFormGroup row>
+                <CFormGroup
+                  row
+                  onChange={(e) => {
+                    const selectRole = e.target.value;
+                    setRole(selectRole);
+                  }}
+                >
                   <CCol md="3">
-                    <CLabel>Checkboxes</CLabel>
+                    <CLabel>Select a role</CLabel>
                   </CCol>
                   <CCol md="9">
-                    <CFormGroup variant="checkbox" className="checkbox">
-                      <CInputCheckbox
-                        id="checkbox1"
-                        name="checkbox1"
-                        value="option1"
+                    <CFormGroup variant="checkbox">
+                      <CInputRadio
+                        className="form-check-input"
+                        id="radio1"
+                        name="radios"
+                        value="Developer"
                       />
-                      <CLabel
-                        variant="checkbox"
-                        className="form-check-label"
-                        htmlFor="checkbox1"
-                      >
-                        Option 1
+                      <CLabel variant="checkbox" htmlFor="radio1">
+                        Developer
                       </CLabel>
                     </CFormGroup>
-                    <CFormGroup variant="checkbox" className="checkbox">
-                      <CInputCheckbox
-                        id="checkbox2"
-                        name="checkbox2"
-                        value="option2"
+                    <CFormGroup variant="checkbox">
+                      <CInputRadio
+                        className="form-check-input"
+                        id="radio2"
+                        name="radios"
+                        value="Tech Lead"
                       />
-                      <CLabel
-                        variant="checkbox"
-                        className="form-check-label"
-                        htmlFor="checkbox2"
-                      >
-                        Option 2
+                      <CLabel variant="checkbox" htmlFor="radio2">
+                        Tech Lead
                       </CLabel>
                     </CFormGroup>
-                    <CFormGroup variant="checkbox" className="checkbox">
-                      <CInputCheckbox
-                        id="checkbox3"
-                        name="checkbox3"
-                        value="option3"
+                    <CFormGroup variant="checkbox">
+                      <CInputRadio
+                        className="form-check-input"
+                        id="radio3"
+                        name="radios"
+                        value="Project Manager"
                       />
-                      <CLabel
-                        variant="checkbox"
-                        className="form-check-label"
-                        htmlFor="checkbox3"
-                      >
-                        Option 3
+                      <CLabel variant="checkbox" htmlFor="radio3">
+                        Project Manager
+                      </CLabel>
+                    </CFormGroup>
+                    <CFormGroup variant="checkbox">
+                      <CInputRadio
+                        className="form-check-input"
+                        id="radio4"
+                        name="radios"
+                        value="Admin"
+                      />
+                      <CLabel variant="checkbox" htmlFor="radio4">
+                        Admin
                       </CLabel>
                     </CFormGroup>
                   </CCol>
                 </CFormGroup>
+                <CButton type="submit" size="sm" color="primary">
+                  <CIcon name="cil-scrubber" /> Submit
+                </CButton>{" "}
+                <CButton
+                  type="reset"
+                  size="sm"
+                  color="danger"
+                  onClick={handleReset}
+                >
+                  <CIcon name="cil-ban" /> Reset
+                </CButton>
               </CForm>
             </CCardBody>
-            <CCardFooter>
-              <CButton type="submit" size="sm" color="primary">
-                <CIcon name="cil-scrubber" /> Submit
-              </CButton>{" "}
-              <CButton type="reset" size="sm" color="danger">
-                <CIcon name="cil-ban" /> Reset
-              </CButton>
-            </CCardFooter>
           </CCard>
         </CCol>
       </CRow>
       <CRow>
-        <CCol>
+        <CCol xs="12">
           <CCard>
             <CCardHeader>
-              <CRow>
-                <CCol md="6">
-                  <h5>
-                    <strong>Your Personnel</strong>
-                  </h5>
-                </CCol>
-                <CCol>
-                  <CForm action="" method="post" className="form-horizontal">
-                    <CFormGroup row className="justify-content-end my-sm-0">
-                      <CCol md="6">
-                        <CInputGroup>
-                          <CInput
-                            id="input2-group2"
-                            name="input2-group2"
-                            placeholder="Username"
-                          />
-                          <CInputGroupAppend>
-                            <CButton type="button" color="primary">
-                              <CIcon name="cil-magnifying-glass" /> Search
-                            </CButton>
-                          </CInputGroupAppend>
-                        </CInputGroup>
-                      </CCol>
-                    </CFormGroup>
-                  </CForm>
-                </CCol>
-              </CRow>
+              <h5>
+                <strong>Your Projects</strong>
+              </h5>
             </CCardHeader>
             <CCardBody>
               <CDataTable
-                items={usersData}
+                items={members}
                 fields={fields}
+                itemsPerPage={5}
+                // clickableRows
                 hover
-                striped
-                bordered
-                size="sm"
-                itemsPerPage={10}
+                sorter={{ resetable: true }}
+                itemsPerPageSelect
+                columnFilter
+                tableFilter
                 pagination
+                striped
                 scopedSlots={{
-                  status: (item) => (
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
+                  registered: (item) => <td>{item.registered.slice(0, 10)}</td>,
+                  role: (item) => (
+                    <td>{item.role.length === 0 ? "N/A" : item.role}</td>
                   ),
                 }}
-              />
+              ></CDataTable>
             </CCardBody>
           </CCard>
         </CCol>

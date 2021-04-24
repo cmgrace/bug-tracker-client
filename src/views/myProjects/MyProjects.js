@@ -1,4 +1,7 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllProjects } from "../../actions/projects";
 
 import {
   CBadge,
@@ -13,11 +16,9 @@ import {
   CCardTitle,
   CCardSubtitle,
   CCardText,
-  CCardLink,
 } from "@coreui/react";
-//import CIcon from "@coreui/icons-react";
 
-//import usersData from "../users/UsersData";
+//import CIcon from "@coreui/icons-react";
 
 const getBadge = (status) => {
   switch (status) {
@@ -34,167 +35,16 @@ const getBadge = (status) => {
   }
 };
 
-//const fields = ["username", "description", "status"];
-const items = [
-  {
-    username: "Samppa Nori",
-    registered: "2012/01/01",
-    role: "Member",
-    status: "Active",
-  },
-  {
-    username: "Estavan Lykos",
-    registered: "2012/02/01",
-    role: "Staff",
-    status: "Banned",
-  },
-  {
-    username: "Chetan Mohamed",
-    registered: "2012/02/01",
-    role: "Admin",
-    status: "Inactive",
-  },
-  {
-    username: "Derick Maximinus",
-    registered: "2012/03/01",
-    role: "Member",
-    status: "Pending",
-  },
-  {
-    username: "Friderik Dávid",
-    registered: "2012/01/21",
-    role: "Staff",
-    status: "Active",
-  },
-  {
-    username: "Yiorgos Avraamu",
-    registered: "2012/01/01",
-    role: "Member",
-    status: "Active",
-  },
-  {
-    username: "Avram Tarasios",
-    registered: "2012/02/01",
-    role: "Staff",
-    status: "Banned",
-    _classes: "table-success",
-  },
-  {
-    username: "Quintin Ed",
-    registered: "2012/02/01",
-    role: "Admin",
-    status: "Inactive",
-  },
-  {
-    username: "Enéas Kwadwo",
-    registered: "2012/03/01",
-    role: "Member",
-    status: "Pending",
-  },
-  {
-    username: "Agapetus Tadeáš",
-    registered: "2012/01/21",
-    role: "Staff",
-    status: "Active",
-  },
-  {
-    username: "Carwyn Fachtna",
-    registered: "2012/01/01",
-    role: "Member",
-    status: "Active",
-    _classes: "table-info",
-  },
-  {
-    username: "Nehemiah Tatius",
-    registered: "2012/02/01",
-    role: "Staff",
-    status: "Banned",
-  },
-  {
-    username: "Ebbe Gemariah",
-    registered: "2012/02/01",
-    role: "Admin",
-    status: "Inactive",
-  },
-  {
-    username: "Eustorgios Amulius",
-    registered: "2012/03/01",
-    role: "Member",
-    status: "Pending",
-  },
-  {
-    username: "Leopold Gáspár",
-    registered: "2012/01/21",
-    role: "Staff",
-    status: "Active",
-  },
-  {
-    username: "Pompeius René",
-    registered: "2012/01/01",
-    role: "Member",
-    status: "Active",
-  },
-  {
-    username: "Paĉjo Jadon",
-    registered: "2012/02/01",
-    role: "Staff",
-    status: "Banned",
-  },
-  {
-    username: "Micheal Mercurius",
-    registered: "2012/02/01",
-    role: "Admin",
-    status: "Inactive",
-  },
-  {
-    username: "Ganesha Dubhghall",
-    registered: "2012/03/01",
-    role: "Member",
-    status: "Pending",
-  },
-  {
-    username: "Hiroto Šimun",
-    registered: "2012/01/21",
-    role: "Staff",
-    status: "Active",
-  },
-  {
-    username: "Vishnu Serghei",
-    registered: "2012/01/01",
-    role: "Member",
-    status: "Active",
-  },
-  {
-    username: "Zbyněk Phoibos",
-    registered: "2012/02/01",
-    role: "Staff",
-    status: "Banned",
-  },
-  {
-    username: "Einar Randall",
-    registered: "2012/02/01",
-    role: "Admin",
-    status: "Inactive",
-    _classes: "table-danger",
-  },
-  {
-    username: "Félix Troels",
-    registered: "2012/03/21",
-    role: "Staff",
-    status: "Active",
-  },
-  {
-    username: "Aulus Agmundr",
-    registered: "2012/01/01",
-    role: "Member",
-    status: "Pending",
-  },
-];
-
 const fields = [
-  { key: "username", style: "min-width:200px" },
-  "registered",
-  { key: "role", style: "min-width:100px;" },
+  { key: "name", style: "min-width:200px " },
+  { key: "start_date", style: "min-width:200px", label: "Start Date" },
+  {
+    key: "target_end_date",
+    style: "min-width:200px",
+    label: "Target End Date",
+  },
+  { key: "create_by", style: "min-width:200px", label: "Creator" },
+
   { key: "status", style: "min-width:100px;" },
   {
     key: "show_details",
@@ -205,44 +55,31 @@ const fields = [
   },
 ];
 
-// export const map_data = {
-//   name: "AdvancedTables",
-//   data() {
-//     return {
-//       items: usersData.map((item, id) => {
-//         return { ...item, id };
-//       }),
-//       fields,
-//       details: [],
-//       collapseDuration: 0,
-//     };
-//   },
-//   methods: {
-//     getBadge(status) {
-//       switch (status) {
-//         case "Active":
-//           return "success";
-//         case "Inactive":
-//           return "secondary";
-//         case "Pending":
-//           return "warning";
-//         case "Banned":
-//           return "danger";
-//         default:
-//           return "primary";
-//       }
-//     },
-//     toggleDetails(item) {
-//       this.$set(this.items[item.id], "_toggled", !item._toggled);
-//       this.collapseDuration = 300;
-//       this.$nextTick(() => {
-//         this.collapseDuration = 0;
-//       });
-//     },
-//   },
-// };
+const handleVisible = (items = [], id) => {
+  const project = items.find((item) => item.id === id);
+  project.visible = !project.visible;
+
+  console.log(project, project.visible, project.id);
+  return project.visible;
+};
 function MyProjects() {
-  const [visible, setVisible] = useState(false);
+  const history = useHistory();
+  const handleClickSeeDetail = (itemId) => {
+    history.push(`/myProjects/${itemId}`);
+    console.log("History:", history);
+    console.log("itemId:", itemId);
+  };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllProjects());
+  }, [dispatch]);
+
+  const items = useSelector((state) => state.projects);
+  //console.log("projects:", items);
+
+  const [count, setCount] = useState(0);
 
   return (
     <CRow>
@@ -255,12 +92,10 @@ function MyProjects() {
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              //   items={usersData}
-              //   fields={fields}
               items={items}
               fields={fields}
               itemsPerPage={5}
-              clickableRows
+              //clickableRows
               //onRowClick={(e) => console.log("row clicked")}
               hover
               sorter
@@ -274,42 +109,49 @@ function MyProjects() {
                     <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
                   </td>
                 ),
-                show_details: (item, index) => (
+                start_date: (item) => <td>{item.start_date.slice(0, 10)}</td>,
+                target_end_date: (item) => (
+                  <td>{item.target_end_date.slice(0, 10)}</td>
+                ),
+                show_details: (item) => (
                   <td className="py-2">
                     <CButton
                       href="#"
                       color="primary"
                       variant="outline"
                       size="sm"
-                      //onClick={(e) => this.toggleDetails(e.target)}
                       onClick={() => {
-                        setVisible(!visible);
+                        handleVisible(items, item.id);
+                        setCount(count + 1);
                       }}
                     >
-                      {visible ? "Hide" : "Show"}
+                      {item.visible ? "Hide" : "Show"}
                     </CButton>
                   </td>
                 ),
                 details: (item) => (
-                  <CCollapse show={visible}>
+                  <CCollapse show={item.visible}>
                     <CCard className="mt-3" style={{ height: "18rem" }}>
                       <CCardBody>
-                        <CCardTitle>Card title</CCardTitle>
+                        <CCardTitle>Project Description</CCardTitle>
                         <CCardSubtitle className="mb-2 text-muted">
-                          Card subtitle
+                          {item.name}
                         </CCardSubtitle>
-                        <CCardText>
-                          Some quick example text to build on the card title and
-                          make up the bulk of the card's content.
-                        </CCardText>
-                        <CCardLink href="#">Card link</CCardLink>
-                        <CCardLink href="#">Another link</CCardLink>
+                        <CCardText>{item.description}</CCardText>
+                        {/* <CCardLink href="#">Card link</CCardLink>
+                        <CCardLink href="#">Another link</CCardLink> */}
 
                         <h4>{item.username}</h4>
                         <p className="text-muted">
-                          User since: {item.registered}
+                          Last Modified By: {item.modified_by} on{" "}
+                          {item.modified_on.slice(0, 10)}
                         </p>
-                        <CButton size="sm" color="info" className="">
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className=""
+                          onClick={() => handleClickSeeDetail(item.id)}
+                        >
                           See Detail
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1">

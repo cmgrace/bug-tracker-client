@@ -62,6 +62,9 @@ const User = React.lazy(() => import("./views/users/User"));
 const ManageRole = React.lazy(() => import("./views/manageRole/ManageRole"));
 const MyProjects = React.lazy(() => import("./views/myProjects/MyProjects"));
 const MyTickets = React.lazy(() => import("./views/myTickets/MyTickets"));
+const ProjectDetails = React.lazy(() =>
+  import("./views/myProjects/ProjectDetails")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -130,6 +133,12 @@ const routes = [
     path: "/myProjects",
     name: "My Projects",
     component: MyProjects,
+    exact: true,
+  },
+  {
+    path: "/myProjects/:project_id",
+    name: "Project Details",
+    component: ProjectDetails,
   },
   {
     path: "/myTickets",
