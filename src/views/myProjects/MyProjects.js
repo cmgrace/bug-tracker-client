@@ -98,11 +98,12 @@ function MyProjects() {
               //clickableRows
               //onRowClick={(e) => console.log("row clicked")}
               hover
-              sorter
+              sorter={{ resetable: true }}
               itemsPerPageSelect
               columnFilter
               tableFilter
               pagination
+              striped
               scopedSlots={{
                 status: (item) => (
                   <td>

@@ -4,6 +4,7 @@ import axios from "axios";
 export const getProjects = () => axios.get(`${API_ENDPOINT}/projects`);
 export const getUsers = () => axios.get(`${API_ENDPOINT}/users`);
 export const getTickets = () => axios.get(`${API_ENDPOINT}/tickets`);
+export const getUserProjects = () => axios.get(`${API_ENDPOINT}/userProject`);
 
 export const createProject = (newProject) =>
   axios.post(`${API_ENDPOINT}/projects`);

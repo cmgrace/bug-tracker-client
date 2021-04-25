@@ -9,9 +9,9 @@ export const getAllTickets = () => async (dispatch) => {
   }
 };
 
-export const createProject = (newTicket) => async (dispatch) => {
+export const createTicket = (newTicket) => async (dispatch) => {
   try {
-    const { data } = await api.createProject(newTicket);
+    const { data } = await api.createTicket(newTicket);
     dispatch({ type: "CREATE_NEW_TICKET", payload: data });
   } catch (error) {
     console.log(error);

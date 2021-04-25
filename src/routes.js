@@ -65,6 +65,9 @@ const MyTickets = React.lazy(() => import("./views/myTickets/MyTickets"));
 const ProjectDetails = React.lazy(() =>
   import("./views/myProjects/ProjectDetails")
 );
+const TicketDetails = React.lazy(() =>
+  import("./views/myTickets/TicketDetails")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -144,6 +147,11 @@ const routes = [
     path: "/myTickets",
     name: "My Tickets",
     component: MyTickets,
+  },
+  {
+    path: "/myTickets/:ticket_id",
+    name: "Ticket Details",
+    component: TicketDetails,
   },
 ];
 
