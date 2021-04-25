@@ -20,7 +20,7 @@ export const createTicket = (newTicket) => async (dispatch) => {
 
 export const updateTicket = (id, updatedTicket) => async (dispatch) => {
   try {
-    const { data } = await api.updateProject(id, updatedTicket);
+    const { data } = await api.updateTicket(id, updatedTicket);
     dispatch({ type: "UPDATE_TICKET", payload: data });
   } catch (error) {
     console.log(error);

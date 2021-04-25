@@ -18,8 +18,6 @@ import {
   CCardText,
 } from "@coreui/react";
 
-//import CIcon from "@coreui/icons-react";
-
 const getBadge = (status) => {
   switch (status) {
     case "Active":

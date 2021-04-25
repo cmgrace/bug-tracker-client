@@ -101,7 +101,7 @@ function ProjectDetails(props) {
   const developer = personnel.filter((person) => person.role === "Developer");
   const manager = personnel.filter((person) => person.role === "Manager");
 
-  //   console.log("tickets:", tickets);
+  console.log("tickets:", tickets);
   //   console.log("project:", projects);
   //   console.log("personnel:", personnel);
   //console.log("params:", project_id);
@@ -245,7 +245,6 @@ function ProjectDetails(props) {
                           {/* <CCardLink href="#">Card link</CCardLink>
                           <CCardLink href="#">Another link</CCardLink> */}
 
-                          {/* <h4>{item.username}</h4> */}
                           <p className="text-muted">
                             Last Modified By: {item.modified_by} on{" "}
                             {item.modified_on.slice(0, 10)}

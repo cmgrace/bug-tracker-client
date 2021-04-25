@@ -100,8 +100,8 @@ function ManageRole() {
                         </option>
                       ))}
                     </CSelect>
-                    <p>{id}</p>
-                    <p>{role}</p>
+                    {/* <p>{id}</p>
+                    <p>{role}</p> */}
                   </CCol>
                 </CFormGroup>
                 <CFormGroup
