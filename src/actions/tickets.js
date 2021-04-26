@@ -20,8 +20,17 @@ export const createTicket = (newTicket) => async (dispatch) => {
 
 export const updateTicket = (id, updatedTicket) => async (dispatch) => {
   try {
-    const { data } = await api.updateTicket(id, updatedTicket);
+    const { data } = await api.createTicket(id, updatedTicket);
     dispatch({ type: "UPDATE_TICKET", payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteTicket = (id) => async (dispatch) => {
+  try {
+    await api.deleteTicket(id);
+    dispatch({ type: "DELETE_TICKET", payload: id });
   } catch (error) {
     console.log(error);
   }

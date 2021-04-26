@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllProjects } from "../../actions/projects";
+import { getAllProjects, deleteProject } from "../../actions/projects";
 
 import {
   CBadge,
@@ -64,7 +64,7 @@ function MyProjects() {
   const history = useHistory();
   const handleClickSeeDetail = (itemId) => {
     history.push(`/myProjects/${itemId}`);
-    console.log("History:", history);
+    console.log("History:", history.push);
     console.log("itemId:", itemId);
   };
 
@@ -153,7 +153,12 @@ function MyProjects() {
                         >
                           See Detail
                         </CButton>
-                        <CButton size="sm" color="danger" className="ml-1">
+                        <CButton
+                          size="sm"
+                          color="danger"
+                          className="ml-1"
+                          onClick={() => dispatch(deleteProject(item.id))}
+                        >
                           Delete
                         </CButton>
                       </CCardBody>

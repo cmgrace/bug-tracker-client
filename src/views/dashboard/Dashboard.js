@@ -1,6 +1,8 @@
-import React, { lazy, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { lazy, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllProjects } from "../../actions/projects";
+import { getAllUsers } from "src/actions/users";
+import { getAllTickets } from "src/actions/tickets";
 import {
   CBadge,
   CButton,
@@ -22,23 +24,38 @@ const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
 const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
 
 const Dashboard = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getAllProjects());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllProjects());
+    dispatch(getAllTickets());
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  const tickets = useSelector((state) => state.tickets);
+  const openTickets = tickets.filter((ticket) => ticket.status === "Open");
+  const closeTickets = tickets.filter((ticket) => ticket.status === "Close");
+
+  const projects = useSelector((state) => state.projects);
+
+  const personnel = useSelector((state) => state.users);
 
   return (
     <>
-      <WidgetsDropdown />
+      <WidgetsDropdown
+        people={personnel.length}
+        project={projects.length}
+        openTicket={openTickets.length}
+        closeTicket={closeTickets.length}
+      />
       <CCard>
         <CCardBody>
           <CRow>
             <CCol sm="5">
               <h4 id="traffic" className="card-title mb-0">
-                Traffic
+                Tickets Solving
               </h4>
-              <div className="small text-muted">November 2017</div>
+              <div className="small text-muted">April 2021</div>
             </CCol>
             <CCol sm="7" className="d-none d-md-block">
               <CButton color="primary" className="float-right">
@@ -63,8 +80,8 @@ const Dashboard = () => {
         <CCardFooter>
           <CRow className="text-center">
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Visits</div>
-              <strong>29.703 Users (40%)</strong>
+              <div className="text-muted">Users</div>
+              <strong>{personnel.length} Users (40%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -73,8 +90,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Unique</div>
-              <strong>24.093 Users (20%)</strong>
+              <div className="text-muted">Tickets</div>
+              <strong>{tickets.length} Tickets (20%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -115,7 +132,7 @@ const Dashboard = () => {
         </CCardFooter>
       </CCard>
 
-      <WidgetsBrand withCharts />
+      {/* <WidgetsBrand withCharts />
 
       <CRow>
         <CCol>
@@ -703,11 +720,11 @@ const Dashboard = () => {
                     </td>
                   </tr>
                 </tbody>
-              </table>
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+              </table> 
+       </CCardBody> 
+      </CCard> 
+      </CCol> 
+       </CRow> */}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getAllTickets } from "src/actions/tickets";
+import { getAllTickets, deleteTicket } from "src/actions/tickets";
 import { getAllProjects } from "src/actions/projects";
 import { getAllUserProjects } from "src/actions/user_project";
 import {
@@ -22,7 +22,7 @@ import {
 import { CChartDoughnut, CChartPie } from "@coreui/react-chartjs";
 
 const fields = [
-  { key: "name", style: "min-width:200px " },
+  { key: "name", style: "min-width:200px ", label: "Title" },
   { key: "create_on", style: "min-width:200px", label: "Create Date" },
   { key: "assigned_to", style: "min-width:200px", label: "Owner" },
   {
@@ -257,7 +257,12 @@ function ProjectDetails(props) {
                           >
                             See Detail
                           </CButton>
-                          <CButton size="sm" color="danger" className="ml-1">
+                          <CButton
+                            size="sm"
+                            color="danger"
+                            className="ml-1"
+                            onClick={() => dispatch(deleteTicket(item.id))}
+                          >
                             Delete
                           </CButton>
                         </CCardBody>

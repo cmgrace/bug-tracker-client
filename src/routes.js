@@ -69,6 +69,10 @@ const ProjectDetails = React.lazy(() =>
 const TicketDetails = React.lazy(() =>
   import("./views/myTickets/TicketDetails")
 );
+const AddNewProject = React.lazy(() =>
+  import("./views/myProjects/AddNewProject")
+);
+const AddNewTicket = React.lazy(() => import("./views/myTickets/AddNewTicket"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -145,6 +149,11 @@ const routes = [
     component: ProjectDetails,
   },
   {
+    path: "/newProject",
+    name: "New Project",
+    component: AddNewProject,
+  },
+  {
     path: "/myTickets",
     name: "My Tickets",
     component: MyTickets,
@@ -154,6 +163,11 @@ const routes = [
     path: "/myTickets/:ticket_id",
     name: "Ticket Details",
     component: TicketDetails,
+  },
+  {
+    path: "/newTicket",
+    name: "New Ticket",
+    component: AddNewTicket,
   },
 ];
 

@@ -8,6 +8,8 @@ const ticket_reducer = (tickets = [], action) => {
       return tickets.map((ticket) =>
         ticket.id === action.payload.id ? action.payload : ticket
       );
+    case "DELETE_TICKET":
+      return tickets.filter((ticket) => ticket.id !== action.payload);
     default:
       return tickets;
   }

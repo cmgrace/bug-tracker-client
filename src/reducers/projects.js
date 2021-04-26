@@ -8,6 +8,8 @@ const project_reducer = (projects = [], action) => {
       return projects.map((project) =>
         project.id === action.payload.id ? action.payload : project
       );
+    case "DELETE_PROJECT":
+      return projects.filter((project) => project.id !== action.payload);
     default:
       return projects;
   }
