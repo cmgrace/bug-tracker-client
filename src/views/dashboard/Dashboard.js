@@ -1,27 +1,24 @@
-import React, { lazy, useEffect, useState } from "react";
+import React, { lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProjects } from "../../actions/projects";
 import { getAllUsers } from "src/actions/users";
 import { getAllTickets } from "src/actions/tickets";
 import {
-  CBadge,
   CButton,
   CButtonGroup,
   CCard,
   CCardBody,
   CCardFooter,
-  CCardHeader,
   CCol,
   CProgress,
   CRow,
-  CCallout,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
 import MainChartExample from "../charts/MainChartExample.js";
 
 const WidgetsDropdown = lazy(() => import("../widgets/WidgetsDropdown.js"));
-const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
+// const WidgetsBrand = lazy(() => import("../widgets/WidgetsBrand.js"));
 
 const Dashboard = () => {
   const dispatch = useDispatch();

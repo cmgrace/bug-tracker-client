@@ -32,7 +32,7 @@ function ManageRole() {
 
   const members = useSelector((state) => state.users);
   //const assignMembers = members.filter((member) => member.role.length === 0);
-  console.log("members:", members);
+  //   console.log("members:", members);
 
   const findUser = (id) => {
     const theUser = members.find((member) => member.id === id);

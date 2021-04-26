@@ -62,14 +62,13 @@ const handleVisible = (items = [], id) => {
   const project = items.find((item) => item.id === id);
   project.visible = !project.visible;
 
-  console.log(project, project.visible, project.id);
+  // console.log(project, project.visible, project.id);
   return project.visible;
 };
 function MyTickets() {
   const history = useHistory();
   const handleClickSeeDetail = (itemId) => {
     history.push(`/myTickets/${itemId}`);
-    console.log("itemId:", itemId);
   };
 
   const dispatch = useDispatch();

@@ -19,7 +19,7 @@ const WidgetsDropdown = (props) => {
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-primary"
-          header={props.people}
+          header={props.people.toString()}
           text="Users onboard"
           footerSlot={
             <ChartLineSimple
@@ -50,7 +50,7 @@ const WidgetsDropdown = (props) => {
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-info"
-          header={props.project}
+          header={props.project.toString()}
           text="Total projects"
           footerSlot={
             <ChartLineSimple
@@ -82,7 +82,7 @@ const WidgetsDropdown = (props) => {
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-warning"
-          header={props.closeTicket}
+          header={props.closeTicket.toString()}
           text="Closed Tickets"
           footerSlot={
             <ChartLineSimple
@@ -114,7 +114,7 @@ const WidgetsDropdown = (props) => {
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-danger"
-          header={props.openTicket}
+          header={props.openTicket.toString()}
           text="Open Tickets"
           footerSlot={
             <ChartBarSimple

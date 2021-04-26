@@ -8,25 +8,17 @@ import { getAllUserProjects } from "src/actions/user_project";
 import CIcon from "@coreui/icons-react";
 
 import {
-  CBadge,
   CButton,
-  CCardGroup,
   CCard,
   CCardBody,
-  CDataTable,
   CCardHeader,
   CCol,
-  CCardTitle,
-  CCardSubtitle,
-  CCardText,
   CRow,
   CForm,
   CFormGroup,
-  CFormText,
   CInput,
   CLabel,
   CSelect,
-  CListGroupItem,
 } from "@coreui/react";
 
 function TicketDetails(props) {
@@ -81,19 +73,19 @@ function TicketDetails(props) {
       console.log("Please select a correct value");
     else dispatch(updateTicket(ticket.id, updatedT));
     setEdit(false);
-    console.log(updatedT);
+    // console.log(updatedT);
   };
-  const handleReset = () => {
-    setUpdatedTicket({
-      name: ticket.name,
-      description: ticket.description,
-      assigned_to: ticket.assigned_to,
-      project_id: ticket.project_id,
-      priority: ticket.priority,
-      status: ticket.status,
-      type: ticket.type,
-    });
-  };
+  //   const handleReset = () => {
+  //     setUpdatedTicket({
+  //       name: ticket.name,
+  //       description: ticket.description,
+  //       assigned_to: ticket.assigned_to,
+  //       project_id: ticket.project_id,
+  //       priority: ticket.priority,
+  //       status: ticket.status,
+  //       type: ticket.type,
+  //     });
+  //   };
 
   const handleClickEdit = () => {
     setEdit(!edit);

@@ -65,7 +65,7 @@ const handleVisible = (items = [], id) => {
   const ticket = items.find((item) => item.id === id);
   ticket.visible = !ticket.visible;
 
-  console.log(ticket, ticket.visible, ticket.id);
+  //   console.log(ticket, ticket.visible, ticket.id);
   return ticket.visible;
 };
 
@@ -101,15 +101,13 @@ function ProjectDetails(props) {
   const developer = personnel.filter((person) => person.role === "Developer");
   const manager = personnel.filter((person) => person.role === "Manager");
 
-  console.log("tickets:", tickets);
+  //   console.log("tickets:", tickets);
   //   console.log("project:", projects);
   //   console.log("personnel:", personnel);
   //console.log("params:", project_id);
   const history = useHistory();
   const handleClickSeeDetail = (itemId) => {
     history.push(`/myTickets/${itemId}`);
-    // console.log("History:", history);
-    console.log("itemId:", itemId);
   };
 
   return (
