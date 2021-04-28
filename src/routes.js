@@ -52,6 +52,7 @@ const routes = [
     path: "/myProjects/:project_id",
     name: "Project Details",
     component: ProjectDetails,
+    exact: true,
   },
   {
     path: "/newProject",
@@ -68,6 +69,7 @@ const routes = [
     path: "/myTickets/:ticket_id",
     name: "Ticket Details",
     component: TicketDetails,
+    exact: true,
   },
   {
     path: "/newTicket",
