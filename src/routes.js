@@ -1,4 +1,6 @@
 import React from "react";
+import ProjectDetails from "./views/myProjects/ProjectDetails";
+import TicketDetails from "./views/myTickets/TicketDetails";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const CoreUIIcons = React.lazy(() =>
@@ -14,12 +16,12 @@ const ManageRole = React.lazy(() => import("./views/manageRole/ManageRole"));
 const MyProjects = React.lazy(() => import("./views/myProjects/MyProjects"));
 const MyTickets = React.lazy(() => import("./views/myTickets/MyTickets"));
 
-const ProjectDetails = React.lazy(() =>
-  import("./views/myProjects/ProjectDetails")
-);
-const TicketDetails = React.lazy(() =>
-  import("./views/myTickets/TicketDetails")
-);
+// const ProjectDetails = React.lazy(() =>
+//   import("./views/myProjects/ProjectDetails")
+// );
+// const TicketDetails = React.lazy(() =>
+//   import("./views/myTickets/TicketDetails")
+// );
 const AddNewProject = React.lazy(() =>
   import("./views/myProjects/AddNewProject")
 );
